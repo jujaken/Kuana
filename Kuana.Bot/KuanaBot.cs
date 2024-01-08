@@ -19,7 +19,7 @@ namespace Kuana.Bot
         private readonly ILogger logger = logger;
         private readonly ICfgManager cfgManager = cfgManager;
 
-        private List<SocketGuild> avaibleGuilds = new();
+        private readonly List<SocketGuild> avaibleGuilds = new();
 
         public async Task Run()
         {
@@ -46,6 +46,7 @@ namespace Kuana.Bot
         private async Task HandleReady()
         {
             await ConnectModules();
+            await ConnectServices();
         }
 
         private Task HandleGuildAvailable(SocketGuild guild)
@@ -69,6 +70,18 @@ namespace Kuana.Bot
                 var ctx = new SocketInteractionContext(client, interaction);
                 await interactionService.ExecuteCommandAsync(ctx, scope.ServiceProvider);
             };
+        }
+
+        private Task ConnectServices()
+        {
+            Assembly.GetEntryAssembly()?.GetTypes().Where(t => t.GetInterfaces().Contains(typeof(IServiceHandler))).ToList().ForEach(s =>
+            {
+                var service = serviceProvider.GetService(s);
+                if (service != null)
+                    (service as IServiceHandler)!.Install();
+            });
+
+            return Task.CompletedTask;
         }
 
         // ???
