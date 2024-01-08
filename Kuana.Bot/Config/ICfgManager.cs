@@ -1,6 +1,6 @@
 ﻿namespace Kuana.Bot.Config
 {
-    internal interface ICfgManager
+    public interface ICfgManager
     {
         bool CreateFile();
         BotConfig GetData();

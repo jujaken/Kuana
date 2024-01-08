@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace Kuana.Bot.Config
 {
-    internal class CfgManager : ICfgManager
+    public class CfgManager : ICfgManager
     {
         private readonly string cfgDir = "Config";
         private readonly string cfgFile = "Config/BotConfig.json";
@@ -15,13 +15,13 @@ namespace Kuana.Bot.Config
         public bool CreateFile()
         {
             if (File.Exists(cfgFile))
-                return true;
+                return false;
 
             var json = JsonSerializer.Serialize(new BotConfig(), BotConfigJsonSerializerContext.Default.BotConfig);
             Directory.CreateDirectory(cfgDir);
             File.WriteAllText(cfgFile, json);
 
-            return false;
+            return true;
         }
 
         public BotConfig GetData()
