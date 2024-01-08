@@ -17,6 +17,7 @@ namespace Kuana.Bot.Modules
                 await RespondAsync("boo, i dont know: `" + expression + "`");
                 return;
             }
+
             await RespondAsync(expression + " = " + res);
         }
     }
