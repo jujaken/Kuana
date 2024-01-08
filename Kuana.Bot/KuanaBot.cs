@@ -22,6 +22,7 @@ namespace Kuana.Bot
             await Task.Delay(-1);
         }
 
+        // ???
         public async Task Stop()
         {
             await client.StopAsync();
