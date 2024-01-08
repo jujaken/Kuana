@@ -10,8 +10,14 @@ namespace Kuana.Bot.Modules
         [SlashCommand("solve-expression", "solve the expression")]
         public async Task SolveExpression(string expression)
         {
-            var exp = new Expression(expression);
-            await RespondAsync(expression + " " + exp.calculate());
+            var res = new Expression(expression).calculate();
+
+            if (double.IsNaN(res))
+            {
+                await RespondAsync("boo, i dont know: `" + expression + "`");
+                return;
+            }
+            await RespondAsync(expression + " = " + res);
         }
     }
 }
