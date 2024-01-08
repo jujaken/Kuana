@@ -1,4 +1,5 @@
 ﻿
+using Discord.Interactions;
 using Discord.WebSocket;
 using Kuana.Bot;
 using Kuana.Bot.Config;
@@ -11,9 +12,10 @@ dialoger.SayHello();
 
 var serviceProvider = new ServiceCollection()
     .AddSingleton<IBot, KuanaBot>()
+    .AddSingleton<DiscordSocketClient>()
+    .AddSingleton<InteractionService>()
     .AddTransient<ICfgManager, CfgManager>()
     .AddTransient<ILogger, ConsoleLogger>()
-    .AddTransient<DiscordSocketClient>()
     .BuildServiceProvider();
 
 var cfgManager = serviceProvider.GetService<ICfgManager>()!;
