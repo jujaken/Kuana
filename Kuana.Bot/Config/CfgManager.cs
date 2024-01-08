@@ -25,9 +25,7 @@ namespace Kuana.Bot.Config
         }
 
         public BotConfig GetData()
-        {
-            return JsonSerializer.Deserialize(File.ReadAllText(cfgFile), BotConfigJsonSerializerContext.Default.BotConfig)
+            => JsonSerializer.Deserialize(File.ReadAllText(cfgFile), BotConfigJsonSerializerContext.Default.BotConfig)
                 ?? throw new BotConfigException();
-        }
     }
 }

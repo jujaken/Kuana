@@ -24,7 +24,7 @@ namespace Kuana.Bot.Services
             var prx1 = prefix is null ? string.Empty : $"<{prefix}> ";
             var prx2 = logType is null || logType == LogType.None ? string.Empty : $"({logType}) ";
 
-            Console.WriteLine($"p{DateTime.Now:hh:mm:ss}] {prx1}{prx2}- {message}");
+            Console.WriteLine($"[{DateTime.Now:hh:mm:ss}] {prx1}{prx2}- {message}");
 
             return Task.CompletedTask;
         }

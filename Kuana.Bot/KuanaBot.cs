@@ -1,16 +1,30 @@
 ﻿
+using Discord;
+using Discord.WebSocket;
+using Kuana.Bot.Config;
+using Kuana.Bot.Services;
+
 namespace Kuana.Bot
 {
-    public class KuanaBot : IBot
+    public class KuanaBot(DiscordSocketClient client, ILogger logger, ICfgManager cfgManager) : IBot
     {
-        public Task Run()
+        private readonly DiscordSocketClient client = client;
+        private readonly ILogger logger = logger;
+        private readonly ICfgManager cfgManager = cfgManager;
+
+        public async Task Run()
         {
-            throw new NotImplementedException();
+            client.Log += (args) => logger.Log(args.Message, LogType.DiscordNet);
+
+            await client.LoginAsync(TokenType.Bot, cfgManager.GetData().Token);
+            await client.StartAsync();
+
+            await Task.Delay(-1);
         }
 
-        public Task Stop()
+        public async Task Stop()
         {
-            throw new NotImplementedException();
+            await client.StopAsync();
         }
     }
 }

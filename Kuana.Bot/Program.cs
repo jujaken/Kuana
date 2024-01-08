@@ -1,4 +1,5 @@
 ﻿
+using Discord.WebSocket;
 using Kuana.Bot;
 using Kuana.Bot.Config;
 using Kuana.Bot.Services;
@@ -12,6 +13,7 @@ var serviceProvider = new ServiceCollection()
     .AddSingleton<IBot, KuanaBot>()
     .AddTransient<ICfgManager, CfgManager>()
     .AddTransient<ILogger, ConsoleLogger>()
+    .AddTransient<DiscordSocketClient>()
     .BuildServiceProvider();
 
 var cfgManager = serviceProvider.GetService<ICfgManager>()!;
