@@ -14,8 +14,9 @@ namespace Kuana.Bot.Services
         private readonly IHttpClientFactory httpClient = httpClient;
         private readonly ICfgManager cfgManager = cfgManager;
 
-        private readonly string prompFile = "Config/PrompKuana.txt";
         private YaPrompter? promper;
+        private KuanaPromp? kuana;
+
 
         public void Install()
         {
@@ -33,17 +34,18 @@ namespace Kuana.Bot.Services
 
             var yaClient = new YaClient(httpClient, options.Client);
             promper = new YaPrompter(yaClient, Options.Create(options));
+            kuana = new KuanaPromp(promper);
 
             client.MessageReceived += HandleMessageReceived;
         }
 
         private async Task HandleMessageReceived(SocketMessage message)
         {
-            if (message.Author.IsBot)
+            if (message.Author.IsBot || !(message.MentionedUsers.Count(u => u.Id == client.CurrentUser.Id) == 1))
                 return;
             try
             {
-                var result = await promper!.SendAsync($"{GetPrompFromFile()}\n ГОВОРИТ {message.Author}: {message.Content}");
+                var result = await kuana!.Send($"{message.Author}: {RemoveMentiones(message)}");
                 await message.Channel.SendMessageAsync(result, messageReference: message.Reference);
             }
             catch (Exception ex)
@@ -52,9 +54,9 @@ namespace Kuana.Bot.Services
             }
         }
 
-        private string GetPrompFromFile()
+        private string RemoveMentiones(SocketMessage message)
         {
-            return File.ReadAllText(prompFile);
+            return message.Content.Replace(client.CurrentUser.Mention, string.Empty);
         }
     }
 }

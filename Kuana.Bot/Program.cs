@@ -27,6 +27,7 @@ var serviceProvider = new ServiceCollection()
     // gpt
     .AddHttpClient()
     .AddSingleton<GptService>()
+    .AddTransient<KuanaPromp>()
     .BuildServiceProvider();
 
 var cfgManager = serviceProvider.GetService<ICfgManager>()!;
