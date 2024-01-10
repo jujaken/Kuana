@@ -7,7 +7,7 @@ namespace Kuana.Bot.Services.Prompts
     {
         private readonly KuanaGirlPrompt prompt = new();
         public KuanaGirlPrompt Prompt => prompt;
-        
+
         private KuanaGirlModel girlModel = girlModel;
 
         public KuanaGirlPromptSender() : this(new KuanaGirlModel() { MemmoryMessage = [], MemmorySize = 10 })
@@ -17,6 +17,11 @@ namespace Kuana.Bot.Services.Prompts
         public async Task<string> Send(IGptService gpt, string message)
         {
             var answer = await gpt.GetAnswer(Prompt.PromptWithText($"{GetMemmory()}{message}"));
+
+            answer = answer.ToLower();
+
+            if (answer.Contains("куана: "))
+                answer = answer[7..];
 
             girlModel.AddToMemmoryMessage(GetAuthor(message), message);
             girlModel.AddToMemmoryMessage("kuana", answer);
