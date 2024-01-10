@@ -5,6 +5,7 @@ using Discord.WebSocket;
 using Kuana.Bot;
 using Kuana.Bot.Config;
 using Kuana.Bot.Services;
+using Kuana.Bot.Services.Prompts;
 using Kuana.Bot.Utils;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -27,7 +28,8 @@ var serviceProvider = new ServiceCollection()
     // gpt
     .AddHttpClient()
     .AddSingleton<KuanaGirlService>()
-    .AddTransient<KuanaPromp>()
+    .AddSingleton<IGptService, YaGptService>()
+    .AddSingleton<IPromptSender<KuanaGirlPrompt>, KuanaGirlPromptSender>()
     .BuildServiceProvider();
 
 var cfgManager = serviceProvider.GetService<ICfgManager>()!;
