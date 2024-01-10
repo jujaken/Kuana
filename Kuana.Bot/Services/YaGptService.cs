@@ -8,7 +8,7 @@ using Zefirrat.YandexGpt.Prompter;
 
 namespace Kuana.Bot.Services
 {
-    public class GptService(DiscordSocketClient client, IHttpClientFactory httpClient, ICfgManager cfgManager) : IServiceHandler
+    public class YaGptService(DiscordSocketClient client, IHttpClientFactory httpClient, ICfgManager cfgManager) : IServiceHandler
     {
         private readonly DiscordSocketClient client = client;
         private readonly IHttpClientFactory httpClient = httpClient;

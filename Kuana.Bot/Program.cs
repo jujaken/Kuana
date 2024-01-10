@@ -26,7 +26,7 @@ var serviceProvider = new ServiceCollection()
     .AddTransient<ILogger, ConsoleLogger>()
     // gpt
     .AddHttpClient()
-    .AddSingleton<GptService>()
+    .AddSingleton<YaGptService>()
     .AddTransient<KuanaPromp>()
     .BuildServiceProvider();
 
