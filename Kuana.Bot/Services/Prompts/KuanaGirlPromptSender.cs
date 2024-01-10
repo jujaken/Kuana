@@ -8,7 +8,7 @@ namespace Kuana.Bot.Services.Prompts
         private readonly KuanaGirlPrompt prompt = new();
         public KuanaGirlPrompt Prompt => prompt;
 
-        private KuanaGirlModel girlModel = girlModel;
+        private readonly KuanaGirlModel girlModel = girlModel;
 
         public KuanaGirlPromptSender() : this(new KuanaGirlModel() { MemmoryMessage = [], MemmorySize = 10 })
         {
