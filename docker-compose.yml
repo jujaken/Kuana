@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  kuana.bot:
+    image: ${DOCKER_REGISTRY-}kuanabot
+    build:
+      context: .
+      dockerfile: Kuana.Bot/Dockerfile
