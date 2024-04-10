@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Kuana.Bot": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
